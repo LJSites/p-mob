@@ -1,95 +1,75 @@
-# Editing your site
+# How to manage your p/mob site
 
-Everything here can be done from your web browser — no apps to install, no
-code to run. When you save a change, the live site updates on its own in a
-minute or two.
+Hey! This folder is everything that runs your website. You don't need to know
+how to code to keep it updated — adding videos and changing wording is mostly
+copy, paste, and save. Here's the whole thing in plain English.
 
-The one thing to know up front: your site's files live in your GitHub repo.
-To change something, you open the file on GitHub, click the pencil, make the
-edit, and click the green **Commit changes** button. That's it — saving is
-called "committing." The site rebuilds itself after each save.
+## What's in here
+- `index.html` — the page itself (all the text and sections)
+- `css/styles.css` — the look (colors, fonts, spacing)
+- `js/videos.js` — the list of videos on the TVs  ← you'll touch this the most
+- `js/main.js` — behind-the-scenes wiring (the contact form, etc.)
+- a couple of helper files you can ignore
 
-> Tip: if you ever make a change you don't like, GitHub keeps every old
-> version. Nothing is ever truly broken — you can always revert. So feel free
-> to experiment.
+## Peek at it first
+Double-click `index.html` and it opens in your web browser so you can look
+around. (A few things like video titles only fully load once the site is
+online, but this is plenty for a preview.)
 
----
+## Putting it online (one time)
+The easiest way to host it for free **and** be able to edit it later from your
+browser is GitHub:
 
-## Add or change a video (the most common edit)
+1. Make a free account at **github.com**.
+2. Click the **+** in the top-right corner → **New repository**. Give it a
+   name like `pmob`, then **Create repository**.
+3. On the new page, click **"uploading an existing file,"** then drag in
+   everything from this folder. Click **Commit changes**.
+4. Go to **Settings → Pages**. Under "Build and deployment," set **Source** to
+   **GitHub Actions**.
+5. Give it a minute — your live link shows up right there on the Pages screen.
 
-The videos on the page come from one file: **`js/videos.js`**.
+Want it on your own address like **pmob.tv**? Buy the domain, then add it under
+**Settings → Pages → Custom domain**. If the domain part feels fiddly, that's a
+good one to hand back to whoever set this up for you.
 
-1. Open the repo on GitHub and click into the `js` folder, then `videos.js`.
-2. Click the **pencil** icon (top right of the file) to edit.
-3. You'll see a list of lines that look like this:
+## Making changes (anytime)
+On github.com, open your repo, click the file you want to change, click the
+**pencil** icon, make your edit, then click **Commit changes**. The site
+updates itself in a minute or two.
 
-   ```js
-   { id: "prqmRXzoRT4", title: "p/mob — Film", channel: "p/mob" },
-   ```
+Don't worry about breaking it — GitHub saves every past version, so you can
+always undo. Experiment freely.
 
-4. To **add** a video, copy one of those lines, paste it as a new line, and
-   change the `id`. The `id` is the part of a YouTube link after `v=`:
+### Add or swap a video (the most common edit)
+Open `js/videos.js`. You'll see lines like this:
 
-   ```
-   https://www.youtube.com/watch?v=prqmRXzoRT4
-                                    └──────────┘  ← this is the id
-   ```
+    { id: "prqmRXzoRT4", title: "p/mob — Film", channel: "p/mob" },
 
-   (For short `youtu.be/abc123` links, it's the part after the slash.)
+Copy a line, paste it below, and change the **id**. The id is the part of a
+YouTube link right after `v=`:
 
-5. To **remove** a video, delete its line. To **reorder**, drag lines around
-   (or cut/paste). The TVs appear in the same order as the list.
-6. Scroll down and click **Commit changes**.
+    youtube.com/watch?v=prqmRXzoRT4   →   prqmRXzoRT4
 
-The video's title and thumbnail load from YouTube automatically — you don't
-have to type them. (The `title` is just a backup label.)
+Delete a line to remove a video. The order of the lines is the order they show
+up on the page. Titles and thumbnails load from YouTube on their own — you
+don't have to type them. Then **Commit changes**.
 
----
+### Change words on the page
+Open `index.html`. Use your browser's Find (**Ctrl-F** / **Cmd-F**) to jump to
+the text you want, then type over it — just leave the `<` `>` tags alone.
+Useful things to search for:
 
-## Change wording on the page
+- the scrolling line under the logo: `production team based out of`
+- the mission statement: `Built to be watched`
+- your email: `pmob.tv`
+- your socials: `pmob.prod`
 
-All the text lives in **`index.html`**. Open it the same way (pencil icon).
-It looks busier than `videos.js`, but you only need to find the words you want
-to change and type over them. Don't touch the `<` and `>` tags around them.
+### Change the email the contact form sends to
+Open `js/main.js`, find `TO =`, and put your email between the quotes. Then
+open `index.html`, find `pmob.tv`, and change it there too so it shows on the
+page. Commit both.
 
-A few things you might want to edit, and what to search for (Ctrl/Cmd-F):
-
-- **The scrolling line under the logo** — search for `production team based out of`.
-- **The mission statement** — search for `Built to be watched`.
-- **The paragraph under it** — search for `takes projects from`.
-- **Contact details** — search for `pmob.tv` (email) or `pmob.prod` (socials).
-
-Change the words, then **Commit changes**.
-
----
-
-## Change the email the form sends to
-
-When someone fills out "Request a Quote," it opens an email to you. To set
-that address:
-
-1. Open **`js/main.js`**.
-2. Search (Ctrl/Cmd-F) for `TO =`.
-3. Change the email in quotes to the address you want quote requests to go to.
-4. Also update the visible email on the page: open `index.html`, search for
-   `pmob.tv`, and change it there too.
-5. **Commit changes** on each.
-
----
-
-## Update your social links
-
-In `index.html`, search for `instagram`, `tiktok`, or `youtube` and update the
-links/handles. They appear in two places — the Request a Quote section and the
-footer — so search for each and update both.
-
----
-
-## After you save
-
-Give it 1–2 minutes, then refresh the live site. If you don't see your change,
-wait another minute (it's rebuilding) and refresh again. On phones, a hard
-refresh sometimes helps.
-
-If anything ever looks off, open the file's **History** on GitHub, find the
-version from before your edit, and restore it — or just ask your developer.
+## If something looks off
+Open the file's **History** on GitHub, pick the version from before your
+change, and restore it. Or just message whoever built this — it's a quick fix.
