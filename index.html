@@ -18,17 +18,18 @@
 </head>
 <body>
 
-  <!-- page-wide grain + halftone tooth -->
+  <!-- page-wide, continuous grain + halftone + cloud texture -->
+  <div class="clouds" aria-hidden="true"></div>
   <div class="grain" aria-hidden="true"></div>
   <div class="grain grain--coarse" aria-hidden="true"></div>
   <div class="dots" aria-hidden="true"></div>
   <div class="vignette" aria-hidden="true"></div>
 
-  <!-- shared SVG filter: roughens the crow silhouettes (torn-paper / vintage) -->
+  <!-- shared SVG filter: subtle inky roughen for display type (grunge, legible) -->
   <svg width="0" height="0" aria-hidden="true" style="position:absolute">
-    <filter id="crowRough" x="-25%" y="-25%" width="150%" height="150%">
-      <feTurbulence type="fractalNoise" baseFrequency="0.34" numOctaves="2" seed="7" result="n" />
-      <feDisplacementMap in="SourceGraphic" in2="n" scale="2" xChannelSelector="R" yChannelSelector="G" />
+    <filter id="inkRough" x="-6%" y="-14%" width="112%" height="128%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9 0.7" numOctaves="1" seed="4" result="n" />
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.4" xChannelSelector="R" yChannelSelector="G" />
     </filter>
   </svg>
 
@@ -46,7 +47,6 @@
 
   <!-- ============ HERO ============ -->
   <section id="top" class="hero">
-    <div class="hero__texture tex" aria-hidden="true"></div>
     <div class="hero__ripple" aria-hidden="true"></div>
 
     <!-- flock: varied birds + bats (percentage-positioned for mobile) -->
@@ -68,8 +68,8 @@
   <!-- ============ MARQUEE ============ -->
   <div class="marquee" aria-hidden="true">
     <div class="marquee__track">
-      <span>FILM<i>✶</i>MUSIC VIDEOS<i>✶</i>COMMERCIAL<i>✶</i>DOCUMENTARY<i>✶</i>EVENTS<i>✶</i>p/mob<i>✶</i></span>
-      <span>FILM<i>✶</i>MUSIC VIDEOS<i>✶</i>COMMERCIAL<i>✶</i>DOCUMENTARY<i>✶</i>EVENTS<i>✶</i>p/mob<i>✶</i></span>
+      <span>p/mob is a production team based out of LA formed by the Perez family<i>✶</i></span>
+      <span>p/mob is a production team based out of LA formed by the Perez family<i>✶</i></span>
     </div>
   </div>
 
@@ -123,6 +123,7 @@
           <li><span class="k">EMAIL</span><a href="mailto:hello@pmob.tv">hello@pmob.tv</a></li>
           <li><span class="k">INSTAGRAM</span><a href="https://instagram.com/pmob.prod" target="_blank" rel="noopener">@pmob.prod</a></li>
           <li><span class="k">YOUTUBE</span><a href="https://www.youtube.com/@pmob." target="_blank" rel="noopener">@pmob.</a></li>
+          <li><span class="k">TIKTOK</span><a href="https://www.tiktok.com/@pmob.prod" target="_blank" rel="noopener">@pmob.prod</a></li>
         </ul>
       </div>
 
@@ -172,7 +173,6 @@
     <div class="footer__logo">
       <span class="logo-block"><span class="logo-p">P</span><span class="logo-slash">/</span></span><span class="logo-mob">MOB</span>
     </div>
-    <p class="footer__tag">Press record. — Los Angeles</p>
     <nav class="footer__social">
       <a href="https://www.youtube.com/@pmob." target="_blank" rel="noopener">YouTube</a>
       <a href="https://instagram.com/pmob.prod" target="_blank" rel="noopener">Instagram</a>
