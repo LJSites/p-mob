@@ -133,7 +133,7 @@
      ================================================================= */
   var form = document.getElementById("quoteForm");
   var note = document.getElementById("formNote");
-  var TO = "hello@pmob.tv"; // <-- change to the real inbox
+  var TO = "pmobdance@gmail.com"; // inbox that receives quote requests
 
   if (form) {
     form.addEventListener("submit", function (e) {
