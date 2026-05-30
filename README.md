@@ -1,48 +1,35 @@
-# p/mob — productions
+# p/mob
 
-The official site for **p/mob productions** — a Los Angeles film & video crew.
+Website for **p/mob** — a production team based out of LA, formed by the Perez family.
 
-Lo-fi screenprint / risograph aesthetic (cobalt blue, halftone grain, bird
-flock, cut-out skyline, hot-red logo block) matching the channel banner.
+Dark, grainy, lo-fi aesthetic. Sections: a hero lockup, a scrolling intro
+line, the work shown on retro "Mini TVs" that link to YouTube, a mission
+statement, and a Request a Quote form.
 
-## Sections
-- **Hero** — the banner artwork rebuilt in CSS/SVG.
-- **The Work** — videos shown as retro **Mini TVs** that link to YouTube.
-- **Our Mission** — the crew's mission statement.
-- **Request a Quote** — a form for people to reach out about shoots.
+## Running it
 
-## It's a plain static site
-No build step. Just open `index.html`, or serve the folder:
+It's a plain static site — no build step, nothing to install. Open
+`index.html` in a browser, or serve the folder:
 
 ```bash
 python3 -m http.server 8000   # then visit http://localhost:8000
 ```
 
-Host it anywhere static (GitHub Pages, Netlify, Vercel, Cloudflare Pages).
+It can be hosted on anything that serves static files (GitHub Pages,
+Netlify, Vercel, Cloudflare Pages).
+
+## Files
 
 ```
-index.html        # page markup
-css/styles.css    # all styling / the aesthetic
-js/videos.js      # <-- EDIT THIS to add/change videos
-js/main.js        # renders Mini TVs, loads titles, handles the form
-assets/skyline.svg# the cut-out collage skyline
+index.html          page content
+css/styles.css      all styling / the look
+js/videos.js        the list of videos  ← edit this to change the TVs
+js/main.js          builds the TVs, loads titles, handles the form
+.github/workflows/  auto-publishes the site when changes are pushed
 ```
 
-## Adding or changing videos
-Open **`js/videos.js`** and edit the list. For a link like
-`https://www.youtube.com/watch?v=prqmRXzoRT4`, the id is `prqmRXzoRT4`:
+## Editing
 
-```js
-{ id: "prqmRXzoRT4", title: "My Film", channel: "p/mob" },
-```
-
-- Thumbnails are pulled from YouTube automatically.
-- Real titles auto-load from YouTube in the browser; `title` is just the
-  fallback shown until then.
-
-## Things to set before launch
-- **Quote inbox:** in `js/main.js`, change `TO = "hello@pmob.tv"` to the real
-  email. The form opens a prefilled email; swap for Formspree/a backend if you
-  want server-side submissions.
-- **Social links / email** in `index.html` (Instagram `@pmob.prod`, TikTok,
-  the `mailto:` in the quote section) — confirm these are correct.
+Day-to-day changes (adding videos, changing wording, updating the contact
+email and socials) are covered in **[GUIDE.md](GUIDE.md)** in plain English —
+no coding background needed.
