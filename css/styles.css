@@ -76,24 +76,16 @@ a { color: inherit; }
 }
 
 /* =====================================================================
-   REUSABLE GRUNGE TEXTURE
-   White fractal "blotch clouds" (procedural SVG) punched with a halftone
-   dot grid -> dithered, high-contrast tooth. Used behind hero + sections.
+   CONTINUOUS GRUNGE CLOUD TEXTURE
+   One fixed, non-repeating blotch layer covering the whole viewport, so
+   the texture flows seamlessly down the page instead of tiling per
+   section. Combined with .dots (halftone) + .grain it reads dithered.
    ===================================================================== */
-.tex { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
-.tex::before {  /* tonal blotch clouds */
-  content: ""; position: absolute; inset: -20%;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='340' height='340'%3E%3Cfilter id='b'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.014' numOctaves='4' seed='8' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 1.1 1.1 1.1 0 -1.25'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23b)'/%3E%3C/svg%3E");
-  background-size: 620px 620px;
-  mix-blend-mode: screen;
-  opacity: var(--tex-cloud, 0.22);
-}
-.tex::after {  /* halftone dots punched over the blotches */
-  content: ""; position: absolute; inset: 0;
-  background-image: radial-gradient(#000 1.1px, transparent 1.7px);
-  background-size: 5px 5px;
-  mix-blend-mode: multiply;
-  opacity: var(--tex-dots, 0.5);
+.clouds {
+  position: fixed; inset: 0; z-index: 9994; pointer-events: none;
+  mix-blend-mode: screen; opacity: 0.17;
+  background-repeat: no-repeat; background-position: center; background-size: cover;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='1500'%3E%3Cfilter id='b'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.006 0.009' numOctaves='4' seed='8' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 1.2 1.2 1.2 0 -1.4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23b)'/%3E%3C/svg%3E");
 }
 
 /* =====================================================================
@@ -149,13 +141,6 @@ a { color: inherit; }
   background: radial-gradient(120% 90% at 50% 22%, #161618 0%, #0c0c0d 55%, #060607 100%);
   isolation: isolate;
 }
-/* grunge halftone-cloud texture behind the logo, cleared in the center */
-.hero__texture {
-  z-index: 0; --tex-cloud: 0.34; --tex-dots: 0.6;
-  -webkit-mask-image: radial-gradient(125% 95% at 50% 46%, transparent 6%, #000 50%);
-  mask-image: radial-gradient(125% 95% at 50% 46%, transparent 6%, #000 50%);
-}
-
 /* faint concentric halftone "ripple" behind the logo (echoes the inspo, subtle) */
 .hero__ripple {
   position: absolute; z-index: 0; pointer-events: none;
@@ -189,7 +174,7 @@ a { color: inherit; }
 .hero__kicker span { color: var(--red); font-size: 0.7em; animation: rec 1.6s steps(1) infinite; }
 @keyframes rec { 50% { opacity: 0.25; } }
 
-.biglogo { display: inline-flex; align-items: center; line-height: 0.84; }
+.biglogo { display: inline-flex; align-items: center; line-height: 0.84; filter: url(#inkRough); }
 .biglogo__block {
   display: inline-flex; align-items: center;
   background: var(--red); color: #fff;
@@ -236,8 +221,8 @@ a { color: inherit; }
   animation-delay: var(--delay, 0s);
 }
 .flock .creature svg { width: 100%; height: auto; display: block; transform-origin: center; animation: flap var(--flap, 2.4s) ease-in-out infinite; animation-delay: var(--delay, 0s); }
-/* aged-paper ink tone so they read on the dark sky */
-.flock .creature path { fill: #cbc4b4; }
+/* light silhouette so the flock reads clearly on the dark sky */
+.flock .creature path { fill: #d2d2d8; }
 @keyframes drift {
   from { transform: translate(-50%, -50%) translate(calc(-6px * var(--s,1)), 0); }
   to   { transform: translate(-50%, -50%) translate(calc(10px * var(--s,1)), calc(-6px * var(--s,1))); }
@@ -253,7 +238,7 @@ a { color: inherit; }
   overflow: hidden; white-space: nowrap;
 }
 .marquee__track {
-  display: inline-flex; padding: 14px 0 10px;
+  display: inline-flex; padding: 14px 0 10px; white-space: nowrap;
   font-family: var(--font-cond);
   font-size: clamp(1.1rem, 2.6vw, 1.8rem);
   letter-spacing: 0.1em; color: var(--ink);
@@ -276,6 +261,7 @@ a { color: inherit; }
   font-family: var(--font-display);
   font-size: clamp(2.6rem, 9vw, 6rem); line-height: 0.9; margin: 0;
   color: var(--ink); letter-spacing: 0.01em;
+  filter: url(#inkRough);   /* subtle printed/inky edge, still legible */
 }
 .section-kicker {
   font-family: var(--font-mono); font-size: 0.85rem;
@@ -400,17 +386,6 @@ a { color: inherit; }
     var(--bg);
   border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
 }
-/* grunge blotch-cloud texture behind section content (global .dots adds the
-   halftone tooth on top) */
-.work, .mission, .quote { position: relative; isolation: isolate; }
-.work::before, .mission::before, .quote::before {
-  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='340' height='340'%3E%3Cfilter id='b'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.013' numOctaves='4' seed='5' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 1.1 1.1 1.1 0 -1.22'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23b)'/%3E%3C/svg%3E");
-  background-size: 680px 680px;
-  mix-blend-mode: screen;
-  opacity: 0.16;
-}
-.mission::before { opacity: 0.13; }   /* a touch lighter under the big copy */
 .mission__inner { position: relative; max-width: 860px; margin: 0 auto; text-align: center; }
 .mission .section-title { margin-bottom: 8px; }
 .mission__lede {
@@ -520,8 +495,7 @@ a { color: inherit; }
   background: var(--bg); border-top: 1px solid var(--line); text-align: center;
   padding: clamp(48px, 7vw, 80px) 20px clamp(30px, 4vw, 46px);
 }
-.footer__logo { margin-bottom: 14px; }
-.footer__tag { font-family: var(--font-cond); letter-spacing: 0.12em; color: var(--muted); margin: 0 0 20px; font-size: 1.05rem; text-transform: uppercase; }
+.footer__logo { margin-bottom: 20px; }
 .footer__social {
   display: flex; justify-content: center; gap: 26px; margin-bottom: 20px;
   font-family: var(--font-cond); font-size: 1.05rem; letter-spacing: 0.1em; text-transform: uppercase;
