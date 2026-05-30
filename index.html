@@ -4,107 +4,91 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>P/MOB — Productions</title>
-  <meta name="description" content="P/MOB Productions — a Los Angeles film and video production crew. Watch our work and request a quote for your next shoot." />
-  <meta name="theme-color" content="#1736d6" />
+  <meta name="description" content="P/MOB Productions — a Los Angeles film & video crew. Watch the work, then put us on your next shoot." />
+  <meta name="theme-color" content="#0b0b0c" />
 
-  <!-- Open Graph / social -->
   <meta property="og:title" content="P/MOB — Productions" />
-  <meta property="og:description" content="A film & video production crew. Watch our work, then put us on your next shoot." />
+  <meta property="og:description" content="A film & video production crew. Watch the work, then put us on your next shoot." />
   <meta property="og:type" content="website" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
 
-  <!-- ============ GRAIN + HALFTONE OVERLAYS (whole page) ============ -->
+  <!-- page-wide grain + halftone -->
   <div class="grain" aria-hidden="true"></div>
+  <div class="vignette" aria-hidden="true"></div>
 
-  <!-- ============ NAVBAR ============ -->
-  <header class="nav">
+  <!-- ============ NAV ============ -->
+  <header class="nav" id="nav">
     <a href="#top" class="nav__logo" aria-label="P/MOB home">
       <span class="logo-block"><span class="logo-p">P</span><span class="logo-slash">/</span></span><span class="logo-mob">MOB</span>
     </a>
     <nav class="nav__links">
       <a href="#work">Work</a>
       <a href="#mission">Mission</a>
-      <a href="#quote">Request a Quote</a>
+      <a href="#quote" class="nav__cta">Request a Quote</a>
     </nav>
   </header>
 
-  <!-- ============ HERO (matches the banner artwork) ============ -->
+  <!-- ============ HERO ============ -->
   <section id="top" class="hero">
-    <!-- storm clouds -->
-    <div class="hero__clouds" aria-hidden="true"></div>
+    <div class="hero__ripple" aria-hidden="true"></div>
 
-    <!-- flying birds -->
-    <div class="hero__birds" aria-hidden="true">
-      <svg viewBox="0 0 1200 300" preserveAspectRatio="xMidYMid slice">
-        <g fill="#0a0a0a" class="flock"></g>
-      </svg>
-    </div>
+    <!-- flock: varied birds + bats (percentage-positioned for mobile) -->
+    <div class="hero__flock flock" aria-hidden="true"></div>
 
-    <!-- center logo -->
     <div class="hero__logo">
+      <p class="hero__kicker"><span>●</span> FILM &nbsp;/&nbsp; LOS ANGELES</p>
       <div class="biglogo">
-        <span class="biglogo__block">
-          <span class="biglogo__p">P</span><span class="biglogo__slash">/</span>
-        </span><span class="biglogo__mob">MOB</span>
+        <span class="biglogo__block"><span class="biglogo__p">P</span><span class="biglogo__slash">/</span></span><span class="biglogo__mob">MOB</span>
       </div>
       <div class="biglogo__sub">PRODUCTIONS</div>
+      <p class="hero__tag">We press record on the stuff worth remembering.</p>
     </div>
 
-    <!-- cut-out collage skyline: steeples, A-frames, trees -->
-    <div class="hero__skyline" aria-hidden="true"></div>
-
     <a href="#work" class="hero__scroll" aria-label="Scroll to work">
-      <span>SEE THE WORK</span>
-      <span class="hero__scroll-arrow">▼</span>
+      <span>SCROLL</span><span class="hero__scroll-line"></span>
     </a>
   </section>
 
   <!-- ============ MARQUEE ============ -->
   <div class="marquee" aria-hidden="true">
     <div class="marquee__track">
-      <span>FILM&nbsp;★&nbsp;MUSIC VIDEOS&nbsp;★&nbsp;COMMERCIAL&nbsp;★&nbsp;DOCUMENTARY&nbsp;★&nbsp;EVENTS&nbsp;★&nbsp;p/mob&nbsp;★&nbsp;</span>
-      <span>FILM&nbsp;★&nbsp;MUSIC VIDEOS&nbsp;★&nbsp;COMMERCIAL&nbsp;★&nbsp;DOCUMENTARY&nbsp;★&nbsp;EVENTS&nbsp;★&nbsp;p/mob&nbsp;★&nbsp;</span>
+      <span>FILM<i>✶</i>MUSIC VIDEOS<i>✶</i>COMMERCIAL<i>✶</i>DOCUMENTARY<i>✶</i>EVENTS<i>✶</i>p/mob<i>✶</i></span>
+      <span>FILM<i>✶</i>MUSIC VIDEOS<i>✶</i>COMMERCIAL<i>✶</i>DOCUMENTARY<i>✶</i>EVENTS<i>✶</i>p/mob<i>✶</i></span>
     </div>
   </div>
 
   <!-- ============ WORK / MINI TVS ============ -->
   <section id="work" class="work">
     <div class="section-head">
+      <p class="eyebrow">// 01 — selected work</p>
       <h2 class="section-title">THE&nbsp;WORK</h2>
       <p class="section-kicker">Tune in. Every set links straight to the film.</p>
     </div>
 
-    <div id="tv-grid" class="tv-grid">
-      <!-- Mini TVs injected by js/main.js -->
-    </div>
+    <div id="tv-grid" class="tv-grid"><!-- Mini TVs injected by js/main.js --></div>
 
     <div class="work__more">
-      <a class="btn btn--ghost" href="https://www.youtube.com/@pmob." target="_blank" rel="noopener">
-        ▶ More on YouTube
-      </a>
+      <a class="btn btn--ghost" href="https://www.youtube.com/@pmob." target="_blank" rel="noopener">▶ More on YouTube</a>
     </div>
   </section>
 
   <!-- ============ MISSION ============ -->
   <section id="mission" class="mission">
     <div class="mission__inner">
-      <h2 class="section-title section-title--light">OUR&nbsp;MISSION</h2>
-      <p class="mission__lede">
-        We're <strong>p/mob</strong> — a crew that treats every frame like it
-        matters.
-      </p>
+      <p class="eyebrow">// 02 — who we are</p>
+      <h2 class="section-title">OUR&nbsp;MISSION</h2>
+      <p class="mission__lede">We're <strong>p/mob</strong> — a crew that treats every frame like it matters.</p>
       <p class="mission__body">
-        Born out of a love for film, music, and the streets we grew up on, we
-        make work that's loud, honest, and built to last. Whether it's a music
-        video, a brand spot, a documentary, or your one-night-only event, we
-        show up hungry and we shoot it like it's ours. No filler. No fluff.
-        Just stories worth pressing record for.
+        Born out of a love for film, music, and the streets we grew up on, we make
+        work that's loud, honest, and built to last. Music video, brand spot,
+        documentary, or your one-night-only event — we show up hungry and shoot it
+        like it's ours. No filler. No fluff. Just stories worth pressing record for.
       </p>
       <ul class="mission__pillars">
         <li><span>01</span> Vision first</li>
@@ -114,53 +98,61 @@
     </div>
   </section>
 
-  <!-- ============ REQUEST A QUOTE ============ -->
+  <!-- ============ REQUEST A QUOTE — "transmission console" ============ -->
   <section id="quote" class="quote">
     <div class="quote__inner">
       <div class="quote__copy">
-        <h2 class="section-title">REQUEST&nbsp;A&nbsp;QUOTE</h2>
-        <p>
-          Got something you want shot? Tell us what you're dreaming up and
-          we'll get back to you with a plan and a price. Music videos, brand
-          work, events, passion projects — pitch it.
+        <p class="eyebrow">// 03 — get in touch</p>
+        <h2 class="section-title">REQUEST<br>A&nbsp;QUOTE</h2>
+        <p class="quote__pitch">
+          Got something you want shot? Tell us what you're dreaming up and we'll come
+          back with a plan and a price. Music videos, brand work, events, passion
+          projects — pitch it.
         </p>
         <ul class="quote__contacts">
-          <li><strong>Email</strong> <a href="mailto:hello@pmob.tv">hello@pmob.tv</a></li>
-          <li><strong>Instagram</strong> <a href="https://instagram.com/pmob.prod" target="_blank" rel="noopener">@pmob.prod</a></li>
-          <li><strong>YouTube</strong> <a href="https://www.youtube.com/@pmob." target="_blank" rel="noopener">@pmob.</a></li>
+          <li><span class="k">EMAIL</span><a href="mailto:hello@pmob.tv">hello@pmob.tv</a></li>
+          <li><span class="k">INSTAGRAM</span><a href="https://instagram.com/pmob.prod" target="_blank" rel="noopener">@pmob.prod</a></li>
+          <li><span class="k">YOUTUBE</span><a href="https://www.youtube.com/@pmob." target="_blank" rel="noopener">@pmob.</a></li>
         </ul>
       </div>
 
-      <form class="quote__form" id="quoteForm" novalidate>
-        <div class="field">
-          <label for="name">Name</label>
-          <input type="text" id="name" name="name" autocomplete="name" required />
+      <form class="console" id="quoteForm" novalidate>
+        <div class="console__bar">
+          <span class="console__rec"><i></i>REC</span>
+          <span class="console__title">NEW TRANSMISSION</span>
+          <span class="console__bars" aria-hidden="true"><b></b><b></b><b></b><b></b><b></b></span>
         </div>
-        <div class="field">
-          <label for="email">Email</label>
-          <input type="email" id="email" name="email" autocomplete="email" required />
+        <div class="console__body">
+          <div class="field">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" autocomplete="name" required placeholder="Who's reaching out?" />
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" autocomplete="email" required placeholder="you@domain.com" />
+          </div>
+          <div class="field">
+            <label for="type">Project type</label>
+            <select id="type" name="type" required>
+              <option value="" disabled selected>Select…</option>
+              <option>Music video</option>
+              <option>Commercial / brand</option>
+              <option>Documentary</option>
+              <option>Event coverage</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="budget">Ballpark budget</label>
+            <input type="text" id="budget" name="budget" placeholder="$ optional" />
+          </div>
+          <div class="field field--full">
+            <label for="details">Tell us about it</label>
+            <textarea id="details" name="details" rows="4" required placeholder="Vibe, timeline, location, references…"></textarea>
+          </div>
+          <button type="submit" class="btn btn--solid console__send">TRANSMIT ▸</button>
+          <p class="console__note" id="formNote" role="status" aria-live="polite"></p>
         </div>
-        <div class="field">
-          <label for="type">Project type</label>
-          <select id="type" name="type" required>
-            <option value="" disabled selected>Pick one…</option>
-            <option>Music video</option>
-            <option>Commercial / brand</option>
-            <option>Documentary</option>
-            <option>Event coverage</option>
-            <option>Other</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="budget">Ballpark budget</label>
-          <input type="text" id="budget" name="budget" placeholder="$ optional" />
-        </div>
-        <div class="field field--full">
-          <label for="details">Tell us about it</label>
-          <textarea id="details" name="details" rows="4" required placeholder="Vibe, timeline, location, references…"></textarea>
-        </div>
-        <button type="submit" class="btn btn--solid">SEND IT ▶</button>
-        <p class="quote__note" id="formNote" role="status" aria-live="polite"></p>
       </form>
     </div>
   </section>

@@ -12,30 +12,74 @@
   var yr = document.getElementById("year");
   if (yr) yr.textContent = new Date().getFullYear();
 
+  /* ---------- nav: solidify after scrolling past the hero edge ---------- */
+  var nav = document.getElementById("nav");
+  if (nav) {
+    var onScroll = function () {
+      nav.classList.toggle("is-stuck", window.scrollY > 40);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+  }
+
   /* =================================================================
-     1. BIRD FLOCK
-     A simple gull-shaped path scattered across the hero, drifting.
+     1. FLOCK — varied birds + a few bats, %-positioned so they stay
+     visible on phones. Curated layout (not random) for a clean look.
      ================================================================= */
+  // silhouette shapes, drawn in a 40x24 viewBox
+  var SHAPES = {
+    // gull, mid glide
+    bird1: "M2 12 C10 4 15 3 20 10 C15 7 11 9 4 14 C-3 9 -11 7 -16 10 C-11 3 -7 4 2 12 Z",
+    // gull, deeper wing-beat
+    bird2: "M2 14 C8 3 13 1 18 8 C13 5 9 8 4 16 C-2 8 -9 5 -16 8 C-11 1 -7 3 2 14 Z",
+    // gull, wide shallow soar
+    bird3: "M2 11 C12 6 18 6 22 11 C16 8 9 9 4 13 C-3 9 -12 8 -18 11 C-12 6 -8 6 2 11 Z",
+    // far-off speck (small V)
+    bird4: "M2 10 C6 6 9 6 12 10 C8 8 5 9 2 12 C-3 9 -7 8 -10 10 C-7 6 -4 6 2 10 Z",
+    // bat — scalloped wings + little ears
+    bat:   "M2 7 L4 3 L5 7 C9 1 15 2 20 8 C17 8 16 11 18 14 C15 11 14 13 11 12 C9 14 7 12 5 15 C3 12 1 14 -1 12 C-4 13 -5 11 -8 14 C-6 11 -7 8 -10 8 C-5 2 1 1 5 7 L4 3 Z",
+  };
+  function svgFor(name, flip) {
+    return (
+      '<svg viewBox="-20 -2 44 22" aria-hidden="true"' +
+      (flip ? ' style="transform:scaleX(-1)"' : "") +
+      '><path d="' + SHAPES[name] + '"/></svg>'
+    );
+  }
+
+  // [shape, leftN, topN, scale, opacity, driftDur(s), flapDur(s), flip]
+  var FLOCK = [
+    ["bird1",  8, 16, 1.15, 0.85, 22, 2.6, 0],
+    ["bird3", 20, 26, 0.85, 0.65, 26, 3.0, 1],
+    ["bird2", 31, 12, 1.30, 0.92, 19, 2.2, 0],
+    ["bird4", 42, 22, 0.55, 0.45, 30, 3.4, 0],
+    ["bat",   50,  9, 0.95, 0.80, 24, 2.0, 0],
+    ["bird1", 60, 20, 1.05, 0.80, 21, 2.5, 1],
+    ["bird3", 72, 13, 0.80, 0.62, 27, 3.1, 0],
+    ["bird2", 83, 24, 1.20, 0.88, 18, 2.3, 1],
+    ["bird4", 90, 15, 0.50, 0.42, 31, 3.6, 0],
+    ["bat",   14, 33, 0.70, 0.62, 25, 2.1, 1],
+    ["bird1", 66, 32, 0.65, 0.55, 28, 2.9, 0],
+    ["bird4", 38, 35, 0.45, 0.38, 33, 3.8, 1],
+    ["bat",   78, 70, 0.85, 0.55, 23, 1.9, 0],
+    ["bird3", 26, 74, 0.70, 0.50, 27, 3.0, 1],
+    ["bird1", 88, 78, 0.60, 0.48, 29, 2.7, 0],
+  ];
+
   function buildFlock() {
-    var g = document.querySelector(".hero__birds .flock");
-    if (!g) return;
-    // a single "M" gull silhouette, drawn small then positioned
-    var birds = [
-      [120, 80, 1.0], [210, 50, 0.7], [300, 110, 1.2], [380, 70, 0.6],
-      [470, 130, 0.9], [560, 60, 1.1], [650, 100, 0.7], [740, 150, 1.3],
-      [820, 80, 0.8], [910, 120, 1.0], [1000, 60, 0.7], [1080, 110, 1.1],
-      [160, 170, 0.6], [430, 30, 0.8], [690, 40, 0.9], [970, 175, 0.7],
-    ];
-    var frag = "";
-    birds.forEach(function (b, i) {
-      var x = b[0], y = b[1], s = b[2];
-      // gull: two curved strokes meeting in the middle
-      frag +=
-        '<path transform="translate(' + x + ',' + y + ') scale(' + s + ')" ' +
-        'class="bird b' + (i % 4) + '" ' +
-        'd="M0 0 C 6 -7 11 -8 16 -2 C 11 -4 7 -2 0 4 C -7 -2 -11 -4 -16 -2 C -11 -8 -6 -7 0 0 Z"/>';
+    var host = document.querySelector(".hero__flock.flock");
+    if (!host) return;
+    var html = "";
+    FLOCK.forEach(function (c) {
+      var name = c[0], isBat = name === "bat";
+      html +=
+        '<span class="creature' + (isBat ? " is-bat" : "") + '" style="' +
+        "left:" + c[1] + "%;top:" + c[2] + "%;" +
+        "--s:" + c[3] + ";--o:" + c[4] + ";--drift:" + c[5] + "s;--flap:" + c[6] + "s;" +
+        "--delay:-" + (c[6] * 0.37).toFixed(2) + "s;" +
+        '">' + svgFor(name, c[7]) + "</span>";
     });
-    g.innerHTML = frag;
+    host.innerHTML = html;
   }
   buildFlock();
 
