@@ -26,44 +26,41 @@
      1. FLOCK — varied birds + a few bats, %-positioned so they stay
      visible on phones. Curated layout (not random) for a clean look.
      ================================================================= */
-  // silhouette shapes, drawn in a 40x24 viewBox
+  // Crow / raven silhouettes in flight (viewBox -26 -18 52 30).
+  // Wide swept wings + fingered tips + a fanned tail read as corvids;
+  // the #crowRough filter tears the edges for a vintage paper-cut feel.
   var SHAPES = {
-    // gull, mid glide
-    bird1: "M2 12 C10 4 15 3 20 10 C15 7 11 9 4 14 C-3 9 -11 7 -16 10 C-11 3 -7 4 2 12 Z",
-    // gull, deeper wing-beat
-    bird2: "M2 14 C8 3 13 1 18 8 C13 5 9 8 4 16 C-2 8 -9 5 -16 8 C-11 1 -7 3 2 14 Z",
-    // gull, wide shallow soar
-    bird3: "M2 11 C12 6 18 6 22 11 C16 8 9 9 4 13 C-3 9 -12 8 -18 11 C-12 6 -8 6 2 11 Z",
-    // far-off speck (small V)
-    bird4: "M2 10 C6 6 9 6 12 10 C8 8 5 9 2 12 C-3 9 -7 8 -10 10 C-7 6 -4 6 2 10 Z",
-    // bat — scalloped wings + little ears
-    bat:   "M2 7 L4 3 L5 7 C9 1 15 2 20 8 C17 8 16 11 18 14 C15 11 14 13 11 12 C9 14 7 12 5 15 C3 12 1 14 -1 12 C-4 13 -5 11 -8 14 C-6 11 -7 8 -10 8 C-5 2 1 1 5 7 L4 3 Z",
+    // soaring, wings out shallow
+    crow1: "M0 1 C5 -1 9 -3 13 -8 C14 -10 16 -11 18 -14 C17 -10 17 -9 16 -7 C18 -8 20 -8 23 -10 C20 -6 18 -5 15 -4 C11 -2 7 -1 3 0 L4 4 L1 3 L0 7 L-1 3 L-4 4 L-3 0 C-7 -1 -11 -2 -15 -4 C-18 -5 -20 -6 -23 -10 C-20 -8 -18 -8 -16 -7 C-17 -9 -17 -10 -18 -14 C-16 -11 -14 -10 -13 -8 C-9 -3 -5 -1 0 1 Z",
+    // mid wing-beat, wings raised
+    crow2: "M0 2 C4 -2 7 -5 10 -11 C11 -13 12 -14 14 -16 C13 -12 13 -10 12 -8 C14 -9 16 -10 18 -12 C16 -7 13 -5 10 -3 C7 -1 4 0 2 1 L3 5 L1 4 L0 8 L-1 4 L-3 5 L-2 1 C-4 0 -7 -1 -10 -3 C-13 -5 -16 -7 -18 -12 C-16 -10 -14 -9 -12 -8 C-13 -10 -13 -12 -14 -16 C-12 -14 -11 -13 -10 -11 C-7 -5 -4 -2 0 2 Z",
+    // gliding flatter, long wings
+    crow3: "M0 0 C6 -1 11 -2 16 -5 C18 -6 20 -6 23 -8 C20 -4 17 -3 13 -2 C8 -1 4 0 2 1 L3 4 L1 3 L0 6 L-1 3 L-3 4 L-2 1 C-4 0 -8 -1 -13 -2 C-17 -3 -20 -4 -23 -8 C-20 -6 -18 -6 -16 -5 C-11 -2 -6 -1 0 0 Z",
   };
   function svgFor(name, flip) {
     return (
-      '<svg viewBox="-20 -2 44 22" aria-hidden="true"' +
+      '<svg viewBox="-26 -18 52 30" aria-hidden="true"' +
       (flip ? ' style="transform:scaleX(-1)"' : "") +
-      '><path d="' + SHAPES[name] + '"/></svg>'
+      '><path filter="url(#crowRough)" d="' + SHAPES[name] + '"/></svg>'
     );
   }
 
   // [shape, leftN, topN, scale, opacity, driftDur(s), flapDur(s), flip]
+  // A loose V-drift of corvids, varied size/depth, kept clear of the logo.
   var FLOCK = [
-    ["bird1",  8, 16, 1.15, 0.85, 22, 2.6, 0],
-    ["bird3", 20, 26, 0.85, 0.65, 26, 3.0, 1],
-    ["bird2", 31, 12, 1.30, 0.92, 19, 2.2, 0],
-    ["bird4", 42, 22, 0.55, 0.45, 30, 3.4, 0],
-    ["bat",   50,  9, 0.95, 0.80, 24, 2.0, 0],
-    ["bird1", 60, 20, 1.05, 0.80, 21, 2.5, 1],
-    ["bird3", 72, 13, 0.80, 0.62, 27, 3.1, 0],
-    ["bird2", 83, 24, 1.20, 0.88, 18, 2.3, 1],
-    ["bird4", 90, 15, 0.50, 0.42, 31, 3.6, 0],
-    ["bat",   14, 33, 0.70, 0.62, 25, 2.1, 1],
-    ["bird1", 66, 32, 0.65, 0.55, 28, 2.9, 0],
-    ["bird4", 38, 35, 0.45, 0.38, 33, 3.8, 1],
-    ["bat",   78, 70, 0.85, 0.55, 23, 1.9, 0],
-    ["bird3", 26, 74, 0.70, 0.50, 27, 3.0, 1],
-    ["bird1", 88, 78, 0.60, 0.48, 29, 2.7, 0],
+    ["crow1",  9, 14, 1.20, 0.92, 23, 3.0, 0],
+    ["crow3", 19, 25, 0.85, 0.66, 27, 3.6, 1],
+    ["crow2", 30, 11, 1.05, 0.85, 20, 2.6, 0],
+    ["crow1", 41, 21, 0.60, 0.50, 31, 3.9, 0],
+    ["crow3", 58, 18, 1.00, 0.80, 22, 3.2, 1],
+    ["crow2", 69, 12, 0.80, 0.64, 26, 2.8, 0],
+    ["crow1", 80, 23, 1.15, 0.88, 19, 2.7, 1],
+    ["crow3", 90, 15, 0.55, 0.46, 32, 4.0, 0],
+    ["crow2", 14, 34, 0.70, 0.55, 28, 3.0, 1],
+    ["crow1", 49, 33, 0.50, 0.42, 33, 4.1, 0],
+    ["crow3", 73, 72, 0.78, 0.52, 24, 3.3, 0],
+    ["crow2", 30, 76, 0.62, 0.46, 29, 3.1, 1],
+    ["crow1", 88, 78, 0.58, 0.44, 30, 2.9, 0],
   ];
 
   function buildFlock() {
@@ -71,13 +68,12 @@
     if (!host) return;
     var html = "";
     FLOCK.forEach(function (c) {
-      var name = c[0], isBat = name === "bat";
       html +=
-        '<span class="creature' + (isBat ? " is-bat" : "") + '" style="' +
+        '<span class="creature" style="' +
         "left:" + c[1] + "%;top:" + c[2] + "%;" +
         "--s:" + c[3] + ";--o:" + c[4] + ";--drift:" + c[5] + "s;--flap:" + c[6] + "s;" +
         "--delay:-" + (c[6] * 0.37).toFixed(2) + "s;" +
-        '">' + svgFor(name, c[7]) + "</span>";
+        '">' + svgFor(c[0], c[7]) + "</span>";
     });
     host.innerHTML = html;
   }

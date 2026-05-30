@@ -13,14 +13,23 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=Bebas+Neue&family=Oswald:wght@500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
 
   <!-- page-wide grain + halftone -->
   <div class="grain" aria-hidden="true"></div>
+  <div class="grain grain--coarse" aria-hidden="true"></div>
   <div class="vignette" aria-hidden="true"></div>
+
+  <!-- shared SVG filter: roughens the crow silhouettes (torn-paper / vintage) -->
+  <svg width="0" height="0" aria-hidden="true" style="position:absolute">
+    <filter id="crowRough" x="-25%" y="-25%" width="150%" height="150%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.34" numOctaves="2" seed="7" result="n" />
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="2" xChannelSelector="R" yChannelSelector="G" />
+    </filter>
+  </svg>
 
   <!-- ============ NAV ============ -->
   <header class="nav" id="nav">
@@ -47,7 +56,6 @@
         <span class="biglogo__block"><span class="biglogo__p">P</span><span class="biglogo__slash">/</span></span><span class="biglogo__mob">MOB</span>
       </div>
       <div class="biglogo__sub">PRODUCTIONS</div>
-      <p class="hero__tag">We press record on the stuff worth remembering.</p>
     </div>
 
     <a href="#work" class="hero__scroll" aria-label="Scroll to work">
