@@ -96,9 +96,23 @@
     return !id || /REPLACE_ME/i.test(id);
   }
 
-  function makeTV(v) {
+  // staggered offsets + tilts so the grid feels like a disorganized wall
+  var TX  = [0, -10, 8, -6, 12, -4, 6, -12];
+  var TY  = [30, 6, 44, 14, 36, 0, 22, 10];
+  var ROT = [-1.6, 1.1, -0.7, 1.7, -1.2, 0.6, -1.9, 1.3];
+
+  function makeTV(v, i) {
     var a = document.createElement("a");
-    a.className = "tv" + (isPlaceholder(v.id) ? " tv--placeholder" : "");
+    // ~1 in 3 sets is "mistuned" (static), but never the placeholders
+    var staticky = !isPlaceholder(v.id) && i % 3 === 2;
+    a.className =
+      "tv" +
+      (isPlaceholder(v.id) ? " tv--placeholder" : "") +
+      (staticky ? " tv--static" : "");
+    a.style.cssText =
+      "--tx:" + TX[i % TX.length] + "px;" +
+      "--ty:" + TY[i % TY.length] + "px;" +
+      "--rot:" + ROT[i % ROT.length] + "deg;";
     if (!isPlaceholder(v.id)) {
       a.href = ytWatch(v.id);
       a.target = "_blank";
@@ -145,8 +159,8 @@
         '<p style="grid-column:1/-1;text-align:center;opacity:.8">' +
         "No videos yet — add some in <code>js/videos.js</code>.</p>";
     } else {
-      var nodes = videos.map(function (v) {
-        var node = makeTV(v);
+      var nodes = videos.map(function (v, i) {
+        var node = makeTV(v, i);
         grid.appendChild(node);
         return { v: v, node: node };
       });
