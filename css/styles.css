@@ -46,32 +46,54 @@ a { color: inherit; }
 /* ---------- global film grain (two scales, animated) ---------- */
 .grain {
   position: fixed; inset: -10%; z-index: 9998;
-  pointer-events: none; opacity: 0.26;
+  pointer-events: none; opacity: 0.4;
   mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   animation: grainshift 0.5s steps(3) infinite;
 }
 /* coarser, slower speckle for a heavier 'paper' tooth */
 .grain--coarse {
-  z-index: 9996; opacity: 0.14; mix-blend-mode: soft-light;
-  background-size: 280px 280px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='c'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.32' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23c)'/%3E%3C/svg%3E");
+  z-index: 9996; opacity: 0.22; mix-blend-mode: soft-light;
+  background-size: 300px 300px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='c'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.28' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23c)'/%3E%3C/svg%3E");
   animation: grainshift 0.9s steps(2) infinite reverse;
 }
 @keyframes grainshift {
   0% { transform: translate(0,0); } 33% { transform: translate(-3%,2%); }
   66% { transform: translate(2%,-3%); } 100% { transform: translate(0,0); }
 }
+/* page-wide halftone dot tooth (over content, subtle but textured) */
+.dots {
+  position: fixed; inset: 0; z-index: 9995; pointer-events: none;
+  opacity: 0.10; mix-blend-mode: soft-light;
+  background-image: radial-gradient(#fff 0.9px, transparent 1.5px);
+  background-size: 4px 4px;
+}
 /* soft vignette to deepen the edges */
 .vignette {
   position: fixed; inset: 0; z-index: 9997; pointer-events: none;
-  background: radial-gradient(120% 100% at 50% 38%, transparent 55%, rgba(0,0,0,0.55) 100%);
+  background: radial-gradient(120% 100% at 50% 38%, transparent 52%, rgba(0,0,0,0.62) 100%);
 }
 
-/* reusable halftone dot layer */
-.halftone {
-  background-image: radial-gradient(rgba(255,255,255,0.5) 0.9px, transparent 1.3px);
+/* =====================================================================
+   REUSABLE GRUNGE TEXTURE
+   White fractal "blotch clouds" (procedural SVG) punched with a halftone
+   dot grid -> dithered, high-contrast tooth. Used behind hero + sections.
+   ===================================================================== */
+.tex { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.tex::before {  /* tonal blotch clouds */
+  content: ""; position: absolute; inset: -20%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='340' height='340'%3E%3Cfilter id='b'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.014' numOctaves='4' seed='8' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 1.1 1.1 1.1 0 -1.25'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23b)'/%3E%3C/svg%3E");
+  background-size: 620px 620px;
+  mix-blend-mode: screen;
+  opacity: var(--tex-cloud, 0.22);
+}
+.tex::after {  /* halftone dots punched over the blotches */
+  content: ""; position: absolute; inset: 0;
+  background-image: radial-gradient(#000 1.1px, transparent 1.7px);
   background-size: 5px 5px;
+  mix-blend-mode: multiply;
+  opacity: var(--tex-dots, 0.5);
 }
 
 /* =====================================================================
@@ -127,6 +149,13 @@ a { color: inherit; }
   background: radial-gradient(120% 90% at 50% 22%, #161618 0%, #0c0c0d 55%, #060607 100%);
   isolation: isolate;
 }
+/* grunge halftone-cloud texture behind the logo, cleared in the center */
+.hero__texture {
+  z-index: 0; --tex-cloud: 0.34; --tex-dots: 0.6;
+  -webkit-mask-image: radial-gradient(125% 95% at 50% 46%, transparent 6%, #000 50%);
+  mask-image: radial-gradient(125% 95% at 50% 46%, transparent 6%, #000 50%);
+}
+
 /* faint concentric halftone "ripple" behind the logo (echoes the inspo, subtle) */
 .hero__ripple {
   position: absolute; z-index: 0; pointer-events: none;
@@ -266,10 +295,17 @@ a { color: inherit; }
 }
 .work__more { text-align: center; margin-top: clamp(40px, 6vw, 70px); }
 
-.tv { text-decoration: none; color: var(--ink); display: block; transition: transform 0.2s ease; }
-.tv:hover { transform: translateY(-6px); }
-.tv:hover .tv__screen::after { opacity: 0; }
+/* scattered placement: each card carries its own offset + tilt so the grid
+   reads like a disorganized wall of sets */
+.tv {
+  text-decoration: none; color: var(--ink); display: block;
+  transform: translate(var(--tx, 0px), var(--ty, 0px)) rotate(var(--rot, 0deg));
+  transition: transform 0.2s ease;
+}
+.tv:hover { transform: translate(var(--tx, 0px), calc(var(--ty, 0px) - 8px)) rotate(0deg); z-index: 2; position: relative; }
+.tv:hover .tv__screen::after { opacity: 0; animation: none; }
 .tv:hover .tv__powerlight { background: #46e07a; box-shadow: 0 0 8px #46e07a; }
+.tv:hover .tv__thumb { filter: grayscale(0) contrast(1.05) brightness(1); }
 
 .tv__body {
   position: relative;
@@ -341,6 +377,18 @@ a { color: inherit; }
 .tv--placeholder .tv__screen { background: repeating-linear-gradient(45deg,#101013 0 12px,#17171b 12px 24px); }
 .tv--placeholder .tv__play span { background: rgba(120,120,128,0.85); }
 
+/* some sets are mistuned — heavy rolling static until you hover */
+.tv--static .tv__thumb { filter: grayscale(1) contrast(1.25) brightness(0.62); }
+.tv--static .tv__screen::after {
+  opacity: 0.62; background-size: 130px 130px;
+  animation: snow 0.22s steps(3) infinite;
+}
+.tv--static .tv__screen::before { background-position: 0 var(--roll, 0); animation: vroll 5.5s linear infinite; }
+.tv--static .tv__play span { opacity: 0.35; }
+.tv:hover.tv--static .tv__play span { opacity: 1; }
+@keyframes snow { from { background-position: 0 0; } to { background-position: 70px -90px; } }
+@keyframes vroll { from { background-position-y: -100%; } to { background-position-y: 100%; } }
+
 /* =====================================================================
    MISSION
    ===================================================================== */
@@ -352,13 +400,17 @@ a { color: inherit; }
     var(--bg);
   border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
 }
-.mission::before {  /* halftone wash */
-  content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0.5;
-  background-image: radial-gradient(rgba(255,255,255,0.05) 0.9px, transparent 1.3px);
-  background-size: 6px 6px;
-  -webkit-mask-image: linear-gradient(180deg, transparent, #000 30%, #000 70%, transparent);
-  mask-image: linear-gradient(180deg, transparent, #000 30%, #000 70%, transparent);
+/* grunge blotch-cloud texture behind section content (global .dots adds the
+   halftone tooth on top) */
+.work, .mission, .quote { position: relative; isolation: isolate; }
+.work::before, .mission::before, .quote::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='340' height='340'%3E%3Cfilter id='b'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.013' numOctaves='4' seed='5' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 1.1 1.1 1.1 0 -1.22'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23b)'/%3E%3C/svg%3E");
+  background-size: 680px 680px;
+  mix-blend-mode: screen;
+  opacity: 0.16;
 }
+.mission::before { opacity: 0.13; }   /* a touch lighter under the big copy */
 .mission__inner { position: relative; max-width: 860px; margin: 0 auto; text-align: center; }
 .mission .section-title { margin-bottom: 8px; }
 .mission__lede {
