@@ -29,9 +29,9 @@ browser is GitHub:
    **GitHub Actions**.
 5. Give it a minute — your live link shows up right there on the Pages screen.
 
-Want it on your own address like **pmob.tv**? Buy the domain, then add it under
-**Settings → Pages → Custom domain**. If the domain part feels fiddly, that's a
-good one to hand back to whoever set this up for you.
+Want it on your own web address (something like **pmob.com**)? Buy the domain,
+then add it under **Settings → Pages → Custom domain**. If the domain part feels
+fiddly, that's a good one to hand back to whoever set this up for you.
 
 ## Making changes (anytime)
 On github.com, open your repo, click the file you want to change, click the
@@ -62,13 +62,14 @@ Useful things to search for:
 
 - the scrolling line under the logo: `production team based out of`
 - the mission statement: `Built to be watched`
-- your email: `pmob.tv`
+- your email: `pmobdance@gmail.com`
 - your socials: `pmob.prod`
+- your Linktree: `linktr.ee`
 
 ### Change the email the contact form sends to
 Open `js/main.js`, find `TO =`, and put your email between the quotes. Then
-open `index.html`, find `pmob.tv`, and change it there too so it shows on the
-page. Commit both.
+open `index.html`, find `pmobdance@gmail.com`, and change it there too so it
+shows on the page. Commit both.
 
 ## If something looks off
 Open the file's **History** on GitHub, pick the version from before your
