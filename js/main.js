@@ -1,6 +1,5 @@
 /* =====================================================================
    P/MOB — MAIN SCRIPT
-   - builds the flying bird flock (SVG)
    - renders the Mini TVs from window.PMOB_VIDEOS
    - auto-loads real YouTube titles (oEmbed) with graceful fallback
    - handles the "Request a Quote" form
@@ -23,62 +22,7 @@
   }
 
   /* =================================================================
-     1. FLOCK — varied birds + a few bats, %-positioned so they stay
-     visible on phones. Curated layout (not random) for a clean look.
-     ================================================================= */
-  // Naturalistic flying-bird silhouettes (like the header flock): a body
-  // with two curved, pointed wings and a small forked tail. Clean shapes,
-  // varied wing positions. Authored around (50,30) in a 60x36 frame.
-  var SHAPES = {
-    // wings out, shallow soar
-    bird1: "M50 30 C44 26 38 22 30 18 C36 22 42 25 48 28 C49 29 49 31 47 33 L50 36 L53 33 C51 31 51 29 52 28 C58 25 64 22 70 18 C62 22 56 26 50 30 Z",
-    // deeper wing-beat, wings raised
-    bird2: "M50 32 C45 24 40 16 34 9 C39 18 44 24 48 29 C49 30 49 32 47 34 L50 38 L53 34 C51 32 51 30 52 29 C56 24 61 16 66 9 C60 16 55 24 50 32 Z",
-    // gliding flat, long wings
-    bird3: "M50 30 C42 28 34 26 24 24 C33 26 41 28 48 29 C49 30 49 31 47 32 L50 34 L53 32 C51 31 51 30 52 29 C59 28 67 26 76 24 C66 26 58 28 50 30 Z",
-  };
-  function svgFor(name, flip) {
-    return (
-      '<svg viewBox="20 6 60 36" aria-hidden="true"' +
-      (flip ? ' style="transform:scaleX(-1)"' : "") +
-      '><path d="' + SHAPES[name] + '"/></svg>'
-    );
-  }
-
-  // [shape, leftN, topN, scale, opacity, driftDur(s), flapDur(s), flip]
-  // Loose, drifting flock; varied size/depth; kept clear of the logo.
-  var FLOCK = [
-    ["bird1",  9, 14, 1.15, 0.92, 23, 3.0, 0],
-    ["bird3", 19, 24, 0.80, 0.66, 27, 3.6, 1],
-    ["bird2", 31, 11, 1.00, 0.85, 20, 2.6, 0],
-    ["bird1", 42, 20, 0.58, 0.50, 31, 3.9, 0],
-    ["bird3", 58, 17, 0.95, 0.80, 22, 3.2, 1],
-    ["bird2", 69, 12, 0.78, 0.64, 26, 2.8, 0],
-    ["bird1", 80, 22, 1.10, 0.88, 19, 2.7, 1],
-    ["bird3", 90, 15, 0.55, 0.46, 32, 4.0, 0],
-    ["bird2", 14, 33, 0.68, 0.55, 28, 3.0, 1],
-    ["bird1", 73, 72, 0.74, 0.52, 24, 3.3, 0],
-    ["bird3", 31, 76, 0.60, 0.46, 29, 3.1, 1],
-  ];
-
-  function buildFlock() {
-    var host = document.querySelector(".hero__flock.flock");
-    if (!host) return;
-    var html = "";
-    FLOCK.forEach(function (c) {
-      html +=
-        '<span class="creature" style="' +
-        "left:" + c[1] + "%;top:" + c[2] + "%;" +
-        "--s:" + c[3] + ";--o:" + c[4] + ";--drift:" + c[5] + "s;--flap:" + c[6] + "s;" +
-        "--delay:-" + (c[6] * 0.37).toFixed(2) + "s;" +
-        '">' + svgFor(c[0], c[7]) + "</span>";
-    });
-    host.innerHTML = html;
-  }
-  buildFlock();
-
-  /* =================================================================
-     2. MINI TVS
+     1. MINI TVS
      ================================================================= */
   var grid = document.getElementById("tv-grid");
   var videos = window.PMOB_VIDEOS || [];

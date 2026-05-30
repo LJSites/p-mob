@@ -157,8 +157,6 @@ a { color: inherit; }
 }
 @keyframes ripplebreathe { 50% { transform: translate(-50%,-50%) scale(1.06); opacity: 0.55; } }
 
-/* flock layer — creatures are %-positioned so they survive on mobile */
-.hero__flock { position: absolute; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; }
 
 /* center lockup */
 .hero__logo {
@@ -210,24 +208,6 @@ a { color: inherit; }
 }
 @keyframes scrolldrop { 0%,100% { transform: scaleY(0.4); opacity:0.5;} 50% { transform: scaleY(1); opacity:1; } }
 
-/* ---- flock: crows / ravens, torn-paper vintage look ---- */
-.flock .creature {
-  position: absolute;
-  width: calc(46px * var(--s, 1));
-  opacity: var(--o, 0.85);
-  transform: translate(-50%, -50%);
-  will-change: transform;
-  animation: drift var(--drift, 22s) ease-in-out infinite alternate;
-  animation-delay: var(--delay, 0s);
-}
-.flock .creature svg { width: 100%; height: auto; display: block; transform-origin: center; animation: flap var(--flap, 2.4s) ease-in-out infinite; animation-delay: var(--delay, 0s); }
-/* light silhouette so the flock reads clearly on the dark sky */
-.flock .creature path { fill: #d2d2d8; }
-@keyframes drift {
-  from { transform: translate(-50%, -50%) translate(calc(-6px * var(--s,1)), 0); }
-  to   { transform: translate(-50%, -50%) translate(calc(10px * var(--s,1)), calc(-6px * var(--s,1))); }
-}
-@keyframes flap { 50% { transform: scaleY(0.74); } }
 
 /* =====================================================================
    MARQUEE
@@ -238,15 +218,16 @@ a { color: inherit; }
   overflow: hidden; white-space: nowrap;
 }
 .marquee__track {
-  display: inline-flex; padding: 14px 0 10px; white-space: nowrap;
+  display: inline-block; padding: 14px 0 10px; white-space: nowrap;
   font-family: var(--font-cond);
   font-size: clamp(1.1rem, 2.6vw, 1.8rem);
   letter-spacing: 0.1em; color: var(--ink);
-  animation: scrollx 26s linear infinite;
+  will-change: transform;
+  animation: scrollx 13s linear infinite;
 }
-.marquee__track span { padding-right: 0.4ch; }
 .marquee__track i { color: var(--red); font-style: normal; padding: 0 0.7ch; }
-@keyframes scrollx { to { transform: translateX(-50%); } }
+/* single phrase sweeps across once per cycle (no doubled-up repeat) */
+@keyframes scrollx { from { transform: translateX(100vw); } to { transform: translateX(-100%); } }
 
 /* =====================================================================
    SHARED SECTION BITS
@@ -389,8 +370,12 @@ a { color: inherit; }
 .mission__inner { position: relative; max-width: 860px; margin: 0 auto; text-align: center; }
 .mission .section-title { margin-bottom: 8px; }
 .mission__lede {
-  font-family: var(--font-heavy);
-  font-size: clamp(1.35rem, 3.6vw, 2.2rem); margin: 26px 0 18px; color: var(--ink);
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  font-size: clamp(1.9rem, 5.2vw, 3.4rem);
+  line-height: 0.95; letter-spacing: 0.01em;
+  margin: 26px auto 22px; color: var(--ink);
+  filter: url(#inkRough);   /* edgier, inkier treatment for the statement */
 }
 .mission__lede strong { color: var(--red); }
 .mission__body { font-size: clamp(1rem, 2.1vw, 1.18rem); line-height: 1.75; color: var(--muted); }
@@ -443,12 +428,12 @@ a { color: inherit; }
 .console__rec i { width: 8px; height: 8px; border-radius: 50%; background: var(--red); animation: rec 1.4s steps(1) infinite; }
 .console__title { letter-spacing: 0.2em; }
 .console__bars { margin-left: auto; display: inline-flex; align-items: flex-end; gap: 3px; height: 14px; }
-.console__bars b { width: 3px; background: var(--faint); animation: eq 1.1s ease-in-out infinite; }
-.console__bars b:nth-child(1){height:40%;animation-delay:0s}
-.console__bars b:nth-child(2){height:70%;animation-delay:.15s}
-.console__bars b:nth-child(3){height:100%;animation-delay:.3s}
-.console__bars b:nth-child(4){height:60%;animation-delay:.45s}
-.console__bars b:nth-child(5){height:80%;animation-delay:.6s}
+.console__bars b { width: 3px; background: var(--faint); transform-origin: bottom; animation: eq 1.1s ease-in-out infinite; }
+.console__bars b:nth-child(1){height:20%;animation-delay:0s}
+.console__bars b:nth-child(2){height:40%;animation-delay:.12s}
+.console__bars b:nth-child(3){height:60%;animation-delay:.24s}
+.console__bars b:nth-child(4){height:80%;animation-delay:.36s}
+.console__bars b:nth-child(5){height:100%;animation-delay:.48s}
 @keyframes eq { 50% { transform: scaleY(0.4); background: var(--red); } }
 
 .console__body { padding: clamp(20px, 3.5vw, 32px); display: grid; grid-template-columns: 1fr 1fr; gap: 18px 16px; }
@@ -518,7 +503,6 @@ a { color: inherit; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .grain, .hero__ripple, .hero__flock svg, .flock .creature,
-  .marquee__track, .hero__scroll-line, .console__bars b,
-  .console__rec i, .hero__kicker span { animation: none !important; }
+  .grain, .hero__ripple, .marquee__track, .hero__scroll-line,
+  .console__bars b, .console__rec i, .hero__kicker span { animation: none !important; }
 }
